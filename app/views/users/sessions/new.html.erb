@@ -1,0 +1,64 @@
+<%= content_for :title, 'Chat | Вход' %>
+<%= content_for :session_fonts do %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<% end %>
+<div class="flex justify-center items-center h-screen">
+  <div class="xl:w-sm pt-[5px] pb-[15px] border-1 border-gray-200 rounded shadow-md">
+    <div class="px-[10px] pt-[5px]">
+      <%= form_for resource, as: resource_name, url: user_session_path do |f| %>
+        <%= render("users/shared/error_messages", resource: resource) %>
+        <% style_input = 'w-full border border-black-500 mb-[5px] rounded-[3px] px-[3px] text-sm h-[25px] focus:outline-none focus:border-blue-500 focus:border-[2px] focus:ring-blue-500 focus:ring-1' %>
+        <div class="mb-[5px] flex justify-center items-center ">
+          <span class="font-[Dancing_Script] font-[700px] non-italic text-[55px] text-[#f79925]">
+            BitChat
+          </span>
+        </div>
+        <hr class="mb-[5px]">
+        <div class="field">
+          <%= f.label :email, class: "" %><br />
+          <%= f.email_field :email, required: true, placeholder: 'Enter email...',autofocus: true, autocomplete: "email", class: style_input %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, required: true, placeholder: 'Enter password...', autocomplete: "current-password", class: style_input %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field flex justify-between items-center">
+            <div class="flex items-center">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me, class: "text-[14px] ml-[3px]" %>
+            </div>
+            <div class="flex items-center">
+              <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                <%= link_to "Forgot your password?", new_user_password_path, class: 'text-[13px] text-[#7182f5] hover:text-[#ad5afa] hover:decoration-dotted' %><br />
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="actions">
+          <%= f.submit "Log in", class: "bg-green-600 hover:bg-green-700 text-white font-bold text-sm py-1 rounded w-full mt-2" %>
+        </div>
+        <div class="flex items-center my-[3px]">
+          <div class="flex-1 border-t border-gray-300"></div>
+          <span class="px-3 text-gray-500">or</span>
+          <div class="flex-1 border-t border-gray-300"></div>
+        </div>
+        <div class="flex justify-start gap-1 items-center">
+          <span class="text-[14px] text-gray-500]">
+            Do you have an account?
+          </span>
+          <div>
+            <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+              <%= link_to "Sign up", new_user_registration_path, class: 'text-[14px] text-[#7182f5] hover:text-[#ad5afa]' %><br />
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

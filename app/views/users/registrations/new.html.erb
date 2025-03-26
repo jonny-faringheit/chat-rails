@@ -1,0 +1,43 @@
+<%= content_for :title, 'Chat | Регистрация' %>
+<h2 class="text-center">Регистрация</h2>
+
+<%= content_for :session_fonts do %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<% end %>
+
+<div class="flex justify-center items-center h-screen">
+  <div class="xl:w-sm pt-[5px] pb-[15px] border-1 border-gray-200 rounded shadow-md">
+    <div class="px-[10px] pt-[5px]">
+      <%= form_for resource, as: resource_name, url: user_registration_path do |f| %>
+        <%= render "users/shared/error_messages", resource: resource %>
+        <% styled_input_form = 'w-full border border-gray-500 mb-[5px] rounded-[3px] px-[3px] text-sm h-[25px] focus:outline-[none]' %>
+
+        <div class="field">
+          <%= f.label :email, class: 'form-label' %><br />
+          <%= f.email_field :email, autocomplete: "email", required: true, placeholder: 'Enter email...', class: styled_input_form %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password, 'Password:', class: 'form-label' %>
+          <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: 'Enter password...', required: true, class: styled_input_form %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password_confirmation, 'Password confirmation:', class: 'form-label' %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: 'Confirm password...', required: true, class: styled_input_form %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Sign up", class: "bg-green-600 hover:bg-green-700 text-white font-bold text-sm py-1 rounded w-full mt-2" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render "users/shared/links" %>
