@@ -8,7 +8,7 @@ gem 'tailwindcss-ruby'
 gem 'tailwindcss-rails'
 gem 'decent_exposure'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.1"
+gem "rails", "~> 8.0.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record
