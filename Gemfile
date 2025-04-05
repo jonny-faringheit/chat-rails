@@ -6,7 +6,7 @@ gem 'valid_email2'
 gem 'device_detector'
 gem 'tailwindcss-ruby'
 gem 'tailwindcss-rails'
-
+gem 'decent_exposure'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
@@ -59,10 +59,11 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'ruby-lsp-rails'
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'solargraph'
 end
-

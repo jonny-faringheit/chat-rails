@@ -1,0 +1,26 @@
+#!/bin/bash
+
+sleep 5
+
+ENV_FILE=".env"
+NGROK_API_URL="http://localhost:4040/api/tunnels"
+KEY_NAME="NGROK_HOST"
+
+response=$(curl -s "$NGROK_API_URL")
+
+PUBLIC_URL=$(echo "$response" | grep -o '"public_url":"[^"]*' | cut -d'"' -f4)
+
+if [ -z "$PUBLIC_URL" ]; then
+  echo "Error: Unable to retrieve public URL from ngrok."
+  exit 1
+fi
+
+if grep -q "^$KEY_NAME=" "$ENV_FILE"; then
+  # Update existing key
+  sed -i "s|^$KEY_NAME=.*|$KEY_NAME=$PUBLIC_URL|" "$ENV_FILE"
+else
+  # Add new key
+  echo "$KEY_NAME=$PUBLIC_URL" >> "$ENV_FILE"
+fi
+
+echo "Updated $KEY_NAME in $ENV_FILE with value: $PUBLIC_URL"
