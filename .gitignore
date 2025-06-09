@@ -6,12 +6,17 @@
 
 # Ignore bundler config.
 /.bundle
+/.claude
+/.claude/*
+CLAUDE.md
+image.png
 
 # Ignore all environment files.
 /.env
 !.env.example
-
+/bin/update_ngrok_env
 /.vscode
+/.vscode/*
 
 # Ignore all logfiles and tempfiles.
 /log/*

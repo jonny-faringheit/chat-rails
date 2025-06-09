@@ -1,0 +1,22 @@
+<%= content_for :title, "BitChat | Мессенджер" %>
+
+<div class="h-full flex flex-col bg-gray-100">
+  <div class="flex-1 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+      <div class="h-full flex gap-4 py-4">
+        <!-- Left sidebar - Conversation list -->
+        <div class="w-80 flex-shrink-0 h-full">
+          <%= render 'conversation_list', conversations: @conversations, selected_conversation: @selected_conversation %>
+        </div>
+        
+        <!-- Right section - Messages -->
+        <div class="flex-1 flex flex-col bg-gray-50 rounded-lg shadow-sm overflow-hidden h-full">
+          <%= render 'messages_section', 
+              conversation: @selected_conversation, 
+              messages: @messages, 
+              message: @message %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<!-- Personal Information -->
+<div class="space-y-4">
+  <h3 class="text-sm font-medium text-gray-900">Личная информация</h3>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <%= form.label :first_name, "Имя", class: "block text-xs font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :first_name, 
+          placeholder: "Имя",
+          class: "w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition duration-150" %>
+    </div>
+    
+    <div>
+      <%= form.label :last_name, "Фамилия", class: "block text-xs font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :last_name, 
+          placeholder: "Фамилия",
+          class: "w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition duration-150" %>
+    </div>
+    
+    <div>
+      <%= form.label :email, "Email", class: "block text-xs font-medium text-gray-700 mb-1" %>
+      <%= form.email_field :email, 
+          autofocus: true, 
+          autocomplete: "email",
+          class: "w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition duration-150" %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <p class="mt-1 text-xs text-orange-600">Ожидает подтверждения: <%= resource.unconfirmed_email %></p>
+      <% end %>
+    </div>
+    
+    <div>
+      <%= form.label :login, "Логин", class: "block text-xs font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :login, 
+          placeholder: "Логин",
+          class: "w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition duration-150" %>
+    </div>
+    
+    <div>
+      <%= form.label :date_of_birth, "Дата рождения", class: "block text-xs font-medium text-gray-700 mb-1" %>
+      <%= form.date_field :date_of_birth, 
+          class: "w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition duration-150" %>
+    </div>
+    
+    <div>
+      <%= form.label :country, "Страна", class: "block text-xs font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :country, 
+          placeholder: "Страна",
+          class: "w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition duration-150" %>
+    </div>
+    
+    <div class="md:col-span-2">
+      <%= form.label :city, "Город", class: "block text-xs font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :city, 
+          placeholder: "Город",
+          class: "w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition duration-150" %>
+    </div>
+  </div>
+</div>

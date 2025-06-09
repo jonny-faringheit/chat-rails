@@ -29,3 +29,8 @@
 
 en:
   hello: "Hello world"
+  errors:
+    messages:
+      blank: "can't be blank"
+      invalid: "is invalid"
+      not_saved: "Could not be saved: %{count} errors"

@@ -1,0 +1,20 @@
+<%# Page container component %>
+<%# Usage: render "shared/layout/page_container", title: "Edit Profile" do %>
+<%#   content %>
+<%# end %>
+
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+  <div class="<%= local_assigns[:max_width] || 'max-w-2xl' %> mx-auto">
+    <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+      <% if local_assigns[:title] %>
+        <div class="px-4 py-3 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900"><%= title %></h2>
+        </div>
+      <% end %>
+      
+      <div class="p-4">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</div>

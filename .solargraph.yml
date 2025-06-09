@@ -1,0 +1,40 @@
+---
+include:
+- "**/*.rb"
+exclude:
+- spec/**/*
+- test/**/*
+- vendor/**/*
+- node_modules/**/*
+- tmp/**/*
+- log/**/*
+- db/schema.rb
+- db/migrate/**/*
+- bin/**/*
+- public/**/*
+- storage/**/*
+- ".bundle/**/*"
+require:
+- rubocop-rails
+- active_support
+- action_controller
+- action_view
+- active_record
+- action_cable
+- rails
+domains: []
+reporters:
+- rubocop
+- require_not_found
+formatter:
+  rubocop:
+    cops: safe
+    except: []
+    only: []
+    extra_args: []
+require_paths:
+- lib
+- app
+plugins:
+- solargraph-rails
+max_files: 5000

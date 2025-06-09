@@ -1,0 +1,33 @@
+<!-- Slide-out menu container -->
+<div data-controller="slide-menu" data-action="keydown@window->slide-menu#closeOnEscape">
+  <%= render "shared/menu/trigger_button" %>
+  
+  <!-- Backdrop overlay -->
+  <div class="fixed inset-0 bg-black/50 z-40 hidden opacity-0 transition-opacity duration-300" 
+       data-slide-menu-target="backdrop"
+       data-action="click->slide-menu#closeOnBackdrop"></div>
+  
+  <!-- Slide-out menu panel -->
+  <div class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col"
+       data-slide-menu-target="menu">
+    
+    <!-- Menu header with close button -->
+    <div class="bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-gray-900">Меню</h2>
+      <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors" data-action="click->slide-menu#close">
+        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Scrollable content area -->
+    <div class="flex-1 overflow-y-auto">
+      <%= render "shared/menu/user_profile_section" %>
+      <%= render "shared/menu/level_xp_section" %>
+      <%= render "shared/menu/navigation_items" %>
+    </div>
+    
+    <%= render "shared/menu/logout_section" %>
+  </div>
+</div>

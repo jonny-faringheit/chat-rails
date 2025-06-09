@@ -1,0 +1,7 @@
+<!-- Menu trigger button -->
+<button class="flex items-center space-x-2 py-1 px-2 hover:bg-white/10 rounded transition-colors" data-action="click->slide-menu#toggle">
+  <%= render "shared/avatar/display", user: current_user, size: "w-10 h-10" %>
+  <svg class="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+  </svg>
+</button>

@@ -1,0 +1,276 @@
+<%= content_for :title, "BitChat | Достижения" %>
+<div class="min-h-full bg-gray-50">
+  <!-- Header -->
+  <div class="relative bg-gradient-to-r from-orange-500 via-orange-600 to-amber-600 text-white overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+      <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100">
+        <pattern id="achievement-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="2" fill="currentColor" opacity="0.3"/>
+          <path d="M5 10l2 2 4-4" stroke="currentColor" stroke-width="1" fill="none" opacity="0.2"/>
+        </pattern>
+        <rect width="100" height="100" fill="url(#achievement-pattern)"/>
+      </svg>
+    </div>
+    
+    <div class="relative px-4 py-4 md:py-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <!-- Back button for mobile -->
+            <button onclick="window.history.back()" class="md:hidden mr-3 p-2 -ml-2 rounded-lg hover:bg-white/10 transition-colors">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </button>
+            <div>
+              <div class="flex items-center mb-1">
+                <div class="bg-white/20 rounded-lg p-1.5 mr-2 hidden md:block">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                </div>
+                <h1 class="text-lg md:text-2xl font-bold">Достижения</h1>
+              </div>
+              <p class="text-xs md:text-sm text-white/90 max-w-md">
+                <%= @user == current_user ? "Отслеживайте свой прогресс и получайте награды за активность" : "Достижения пользователя #{@user.full_name_present? ? @user.full_name : @user.login}" %>
+              </p>
+            </div>
+          </div>
+          
+          <!-- Points Display -->
+          <div class="text-right">
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 border border-white/20">
+              <div class="flex items-center justify-center mb-1">
+                <svg class="w-4 h-4 md:w-6 md:h-6 text-yellow-300 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <div class="text-lg md:text-2xl font-bold"><%= @total_points %></div>
+              </div>
+              <div class="text-xs text-white/80 font-medium">Общий рейтинг</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Stats -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="px-4 py-4 md:py-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-3 gap-4 md:gap-8">
+          <!-- Level -->
+          <div class="text-center group">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 md:p-4 mb-2 group-hover:shadow-lg transition-all duration-300">
+              <div class="flex items-center justify-center mb-1">
+                <svg class="w-5 h-5 md:w-6 md:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <div class="text-xl md:text-2xl font-bold text-blue-700"><%= @user.level %></div>
+            </div>
+            <div class="text-sm md:text-base font-medium text-gray-700">Уровень</div>
+            <div class="text-xs text-gray-500 mt-1">
+              <%= @user.level_progress_percentage %>% до следующего
+            </div>
+          </div>
+          
+          <!-- Achievements -->
+          <div class="text-center group">
+            <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg p-3 md:p-4 mb-2 group-hover:shadow-lg transition-all duration-300">
+              <div class="flex items-center justify-center mb-1">
+                <svg class="w-5 h-5 md:w-6 md:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
+              </div>
+              <div class="text-xl md:text-2xl font-bold text-green-700"><%= @user.achievements.count %></div>
+            </div>
+            <div class="text-sm md:text-base font-medium text-gray-700">Достижений</div>
+            <div class="text-xs text-gray-500 mt-1">
+              из <%= Achievement.count %> доступных
+            </div>
+          </div>
+          
+          <!-- Experience -->
+          <div class="text-center group">
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-3 md:p-4 mb-2 group-hover:shadow-lg transition-all duration-300">
+              <div class="flex items-center justify-center mb-1">
+                <svg class="w-5 h-5 md:w-6 md:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+              </div>
+              <div class="text-xl md:text-2xl font-bold text-purple-700"><%= number_with_delimiter(@user.current_xp) %></div>
+            </div>
+            <div class="text-sm md:text-base font-medium text-gray-700">Опыта</div>
+            <div class="text-xs text-gray-500 mt-1">
+              +<%= @user.xp_needed_for_next_level %> до уровня <%= @user.level + 1 %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Category Selector -->
+  <div class="md:hidden bg-white border-b border-gray-200">
+    <div class="px-4 py-3">
+      <select class="w-full rounded-md border-gray-300 text-sm" onchange="window.location.href = this.value">
+        <option value="<%= achievements_path(category: 'all') %>" <%= 'selected' if @selected_category == 'all' %>>🏅 Все достижения</option>
+        <% Achievement::CATEGORIES.each do |key, name| %>
+          <% icon = case key
+                    when :communication then "💬"
+                    when :social then "👥"
+                    when :activity then "🔥"
+                    when :special then "⭐"
+                    when :level then "📈"
+                    end %>
+          <option value="<%= achievements_path(category: key) %>" <%= 'selected' if @selected_category == key.to_s %>><%= icon %> <%= name %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+
+  <!-- Main Content with Sidebar -->
+  <div class="md:flex md:overflow-hidden">
+    <!-- Desktop Sidebar -->
+    <div class="hidden md:block w-64 bg-white shadow-sm flex-shrink-0 overflow-y-auto">
+      <div class="p-4">
+        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">Категории</h3>
+        
+        <!-- All Achievements -->
+        <%= link_to achievements_path(category: 'all'), 
+            class: "flex items-center justify-between px-3 py-2 mb-1 rounded-lg transition-colors #{@selected_category == 'all' ? 'bg-orange-100 text-orange-700' : 'hover:bg-gray-100 text-gray-700'}" do %>
+          <div class="flex items-center">
+            <span class="text-lg mr-2">🏅</span>
+            <span class="text-sm font-medium">Все достижения</span>
+          </div>
+          <span class="text-xs text-gray-500">
+            <%= @user.achievements.count %> / <%= Achievement.count %>
+          </span>
+        <% end %>
+        
+        <div class="mt-4 space-y-1">
+          <% Achievement::CATEGORIES.each do |key, name| %>
+            <% stats = @category_stats[key] %>
+            <%= link_to achievements_path(category: key), 
+                class: "flex items-center justify-between px-3 py-2 rounded-lg transition-colors #{@selected_category == key.to_s ? 'bg-orange-100 text-orange-700' : 'hover:bg-gray-100 text-gray-700'}" do %>
+              <div class="flex items-center">
+                <span class="text-lg mr-2">
+                  <%= case key
+                      when :communication then "💬"
+                      when :social then "👥"
+                      when :activity then "🔥"
+                      when :special then "⭐"
+                      when :level then "📈"
+                      end %>
+                </span>
+                <span class="text-sm font-medium"><%= name %></span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <% if stats[:earned] == stats[:total] %>
+                  <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                  </svg>
+                <% end %>
+                <span class="text-xs text-gray-500">
+                  <%= stats[:earned] %> / <%= stats[:total] %>
+                </span>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        
+        <!-- Progress Overview (Desktop only) -->
+        <div class="mt-6 p-3 bg-gray-50 rounded-lg">
+          <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Общий прогресс</h4>
+          <div class="space-y-2">
+            <% total_achievements = Achievement.count %>
+            <% earned_achievements = @user.achievements.count %>
+            <% progress = (earned_achievements.to_f / total_achievements * 100).round %>
+            <div class="flex justify-between text-xs">
+              <span class="text-gray-600">Получено</span>
+              <span class="font-medium text-gray-900"><%= progress %>%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="bg-gradient-to-r from-orange-400 to-orange-600 h-2 rounded-full transition-all duration-300" style="width: <%= progress %>%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Grid -->
+    <div class="md:flex-1 md:overflow-y-auto bg-gray-50">
+      <div class="px-4 py-4 md:py-8">
+        <% if @achievements_by_category.empty? %>
+          <div class="text-center py-12">
+            <p class="text-gray-500">Нет достижений в выбранной категории</p>
+          </div>
+        <% else %>
+          <% @achievements_by_category.each do |category, achievements| %>
+            <div class="mb-6 md:mb-8">
+              <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4 hidden md:block">
+                <%= Achievement::CATEGORIES[category.to_sym] %>
+              </h2>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
+                <% achievements.each do |achievement| %>
+                  <% earned = @user_achievement_ids.include?(achievement.id) %>
+                  <% user_achievement = @user.user_achievements.find_by(achievement: achievement) if earned %>
+                  
+                  <div class="bg-white rounded-lg shadow-sm border <%= earned ? 'border-orange-200 bg-orange-50' : 'border-gray-200 opacity-75' %> p-3 md:p-4 relative overflow-hidden">
+                    <!-- Tier Badge -->
+                    <div class="absolute top-2 right-2">
+                      <div class="w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background-color: <%= achievement.tier_color %>">
+                        <%= achievement.tier %>
+                      </div>
+                    </div>
+                    
+                    <!-- Achievement Content -->
+                    <div class="flex items-start space-x-3 md:space-x-4">
+                      <!-- Icon -->
+                      <div class="flex-shrink-0">
+                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-lg bg-gradient-to-br <%= earned ? 'from-orange-400 to-orange-600' : 'from-gray-300 to-gray-400' %> flex items-center justify-center text-white text-xl md:text-2xl">
+                          <%= achievement.icon %>
+                        </div>
+                      </div>
+                      
+                      <!-- Details -->
+                      <div class="flex-1 min-w-0">
+                        <h3 class="text-sm md:text-base font-semibold text-gray-900 <%= 'text-orange-900' if earned %>">
+                          <%= achievement.name %>
+                        </h3>
+                        <p class="text-xs md:text-sm text-gray-600 mt-1">
+                          <%= achievement.description %>
+                        </p>
+                        
+                        <!-- Stats -->
+                        <div class="mt-2 flex items-center space-x-2 md:space-x-3 text-xs">
+                          <span class="text-gray-500">
+                            +<%= achievement.points %> очков
+                          </span>
+                          <span class="text-gray-400">•</span>
+                          <span class="text-gray-500">
+                            <%= achievement.percentage_of_users %>% игроков
+                          </span>
+                        </div>
+                        
+                        <!-- Earned Date -->
+                        <% if earned && user_achievement %>
+                          <div class="mt-2 text-xs text-orange-600 font-medium">
+                            Получено <%= l(user_achievement.earned_at, format: :short) %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

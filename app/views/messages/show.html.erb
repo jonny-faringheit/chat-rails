@@ -1,0 +1,65 @@
+<div class="flex flex-col h-full bg-gray-50">
+  <!-- Header -->
+  <div class="bg-white border-b flex-shrink-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between py-4">
+        <div class="flex items-center">
+          <%= link_to messages_path, class: "mr-4 text-gray-400 hover:text-gray-600" do %>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          <% end %>
+          <% other_user = @conversation.other_participant(current_user) %>
+          <div class="flex items-center">
+            <div class="h-10 w-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold">
+              <%= other_user.full_name_present? ? other_user.full_name.chars.first.upcase : other_user.email.chars.first.upcase %>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-gray-900">
+                <%= other_user.full_name_present? ? other_user.full_name : other_user.email %>
+              </p>
+              <p class="text-xs text-gray-500">В сети</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messages Area -->
+  <div class="flex-1 overflow-y-auto" id="messages-container">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div id="messages" class="space-y-4">
+        <% @messages.each do |message| %>
+          <%= render 'messages/message', message: message, current_user: current_user %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Input -->
+  <div class="bg-white border-t flex-shrink-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <%= form_with model: [@conversation, @message], local: false, class: "flex items-end space-x-4" do |form| %>
+        <div class="flex-1">
+          <%= form.text_area :content, 
+              rows: 1,
+              placeholder: "Введите сообщение...",
+              class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm resize-none",
+              data: { 
+                controller: "autogrow",
+                action: "input->autogrow#resize"
+              } %>
+        </div>
+        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+          </svg>
+          Отправить
+        </button>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= turbo_stream_from @conversation %>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :session_fonts %>
@@ -17,32 +18,20 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload", as: 'style' %>
-    <%#= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="h-screen flex flex-col">
     <% if current_user %>
       <%= render partial: 'shared/desktop_header', locals: {user: current_user} %>
     <% end %>
-    <% if notice %>
-      <div class="notice">
-        <p class="notice__item"><%= notice %></p>
-      </div>
-    <% end %>
-    <% if alert %>
-      <div class="alert fixed block xl:w-[400px] xl:h-[50px] md:w-[300px] md:h-[40px] bg-[#59c270] border-1 border-solid border-[#05a628] rounded-[3px]">
-        <p class="alert__item text-white"><%= alert %></p>
-      </div>
-    <% end %>
-    <%= yield %>
-  <script>
-    window.addEventListener('DOMContentLoaded', function() {
-        const flashItem = document.querySelector('div.notice, div.alert');
-        if (flashItem) {
-            console.log(flashItem);
-        }
-    });
-  </script>
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col-reverse">
+      <%= toast_flash_messages %>
+    </div>
+    
+    <main class="flex-1 overflow-auto">
+      <%= yield %>
+    </main>
   </body>
 </html>

@@ -1,0 +1,10 @@
+<div class="flex <%= message.sender == current_user ? 'justify-end' : 'justify-start' %>">
+  <div class="max-w-xs lg:max-w-md">
+    <div class="<%= message.sender == current_user ? 'bg-indigo-600 text-white' : 'bg-white text-gray-900' %> rounded-lg px-4 py-2 shadow">
+      <p class="text-sm"><%= message.content %></p>
+    </div>
+    <p class="text-xs text-gray-500 mt-1 <%= message.sender == current_user ? 'text-right' : 'text-left' %>">
+      <%= message.created_at.strftime("%H:%M") %>
+    </p>
+  </div>
+</div>
