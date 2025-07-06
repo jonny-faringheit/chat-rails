@@ -1,33 +1,56 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_conversation, only: [:create]
+  before_action :ensure_participant!, only: [:create]
+  before_action :build_message, only: [:create]
+
+  rescue_from ActiveRecord::RecordNotFound do
+    redirect_to chats_path, alert: 'Чат не найден'
+  end
 
   def create
-    @conversation = Conversation.find(params[:message][:conversation_id])
-
-    # Verify user is participant
-    unless @conversation.participants.include?(current_user)
-      redirect_to chats_path, alert: 'Вы не являетесь участником этого чата'
-      return
-    end
-
-    @message = @conversation.messages.build(message_params)
-    @message.sender = current_user
-
     if @message.save
-      # Update conversation's updated_at for sorting
       @conversation.touch
 
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to show_chat_path(@conversation.interlocutor_for(current_user).login) }
+        format.html { redirect_to chat_path }
       end
     else
-      redirect_to show_chat_path(@conversation.interlocutor_for(current_user).login),
-                  alert: 'Не удалось отправить сообщение'
+      redirect_to chat_path, alert: 'Не удалось отправить сообщение'
     end
   end
 
   private
+
+  def set_conversation
+    @conversation = Conversation
+      .includes(:participants)
+      .find(params[:message][:conversation_id])
+  end
+
+  def ensure_participant!
+    unless participant?
+      redirect_to chats_path, alert: 'Вы не являетесь участником этого чата'
+    end
+  end
+
+  def build_message
+    @message = @conversation.messages.build(message_params)
+    @message.sender = current_user
+  end
+
+  def participant?
+    @conversation.participants.include?(current_user)
+  end
+
+  def interlocutor
+    @interlocutor ||= @conversation.interlocutor_for(current_user)
+  end
+
+  def chat_path
+    show_chat_path(interlocutor.login)
+  end
 
   def message_params
     params.require(:message).permit(:content)
