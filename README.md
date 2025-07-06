@@ -78,7 +78,7 @@ BitChat - это современное веб-приложение для об�
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/yourusername/chat_app.git
+git clone https://github.com/jonny-faringheit/chat_app.git
 cd chat_app
 ```
 
