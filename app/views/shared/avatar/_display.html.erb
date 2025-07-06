@@ -1,5 +1,5 @@
 <%# Avatar display component %>
-<%# Usage: render "shared/avatar/display", user: current_user, size: "w-16 h-16", editable: true %>
+<%# Usage: render "shared/avatar/display", user: current_user, size: "w-16 h-16", editable: true, show_status: true %>
 
 <%
   size_class = local_assigns[:size] || "w-16 h-16"
@@ -7,8 +7,24 @@
   when /w-10/, /h-10/ then "text-base"
   when /w-16/, /h-16/ then "text-lg"
   when /w-20/, /h-20/ then "text-xl"
+  when /w-32/, /h-32/ then "text-3xl"
   else "text-lg"
   end
+  
+  # Determine status indicator size based on avatar size
+  status_size = case size_class
+  when /w-10/, /h-10/ then "w-2.5 h-2.5"
+  when /w-16/, /h-16/ then "w-3.5 h-3.5"
+  when /w-20/, /h-20/ then "w-4 h-4"
+  when /w-32/, /h-32/ then "w-6 h-6"
+  else "w-3.5 h-3.5"
+  end
+  
+  # Show status by default unless explicitly disabled
+  show_status = local_assigns[:show_status] != false
+  # Don't show status for current user in menu trigger
+  is_menu_trigger = local_assigns[:context] == 'menu_trigger'
+  show_online_indicator = show_status && !is_menu_trigger && user.persisted?
 %>
 
 <div class="relative">
@@ -29,5 +45,11 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
       </svg>
     </label>
+  <% end %>
+  
+  <% if show_online_indicator %>
+    <div class="absolute bottom-0 right-0 <%= status_size %> bg-white rounded-full p-0.5 transform -translate-x-0.5 -translate-y-0.5">
+      <div class="w-full h-full rounded-full <%= user.online? ? 'bg-green-500' : 'bg-gray-400' %>"></div>
+    </div>
   <% end %>
 </div>

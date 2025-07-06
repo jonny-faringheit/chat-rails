@@ -6,9 +6,10 @@ gem 'valid_email2'
 gem 'device_detector'
 gem 'tailwindcss-ruby'
 gem 'tailwindcss-rails'
-gem 'decent_exposure'
 gem 'rack-attack'
 gem 'browser'
+gem 'whenever'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
@@ -52,6 +53,7 @@ gem "thruster", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "byebug", "~> 12.0"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false

@@ -19,6 +19,18 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload", as: 'style' %>
     <%= javascript_importmap_tags %>
+    
+    <style>
+      turbo-cable-stream-source {
+        display: none !important;
+      }
+      
+      /* Better word breaking for messages */
+      .break-words {
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+    </style>
   </head>
 
   <body class="h-screen flex flex-col">

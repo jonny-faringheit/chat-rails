@@ -1,6 +1,6 @@
 class Message < ApplicationRecord
   belongs_to :sender, class_name: "User"
-  belongs_to :conversation
+  belongs_to :conversation, counter_cache: true
 
   validates :content, presence: true
 
@@ -14,6 +14,6 @@ class Message < ApplicationRecord
     broadcast_append_to conversation,
                        target: "messages",
                        partial: "messages/message",
-                       locals: { message: self }
+                       locals: { message: self, current_user: nil, conversation: conversation }
   end
 end

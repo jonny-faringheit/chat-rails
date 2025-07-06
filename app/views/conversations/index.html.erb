@@ -1,0 +1,21 @@
+<%= content_for :title, "BitChat | Мессенджер" %>
+
+<div class="h-full flex flex-col bg-gray-100" data-controller="conversation">
+  <div class="flex-1 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+      <div class="h-full flex gap-4 py-4">
+        <!-- Left sidebar - Conversation list -->
+        <div class="w-80 flex-shrink-0 h-full">
+          <%= render 'conversation_list', conversations: @conversations %>
+        </div>
+        
+        <!-- Right section - Messages (Turbo Frame) -->
+        <div class="flex-1 bg-gray-50 rounded-lg shadow-sm overflow-hidden h-full">
+          <%= turbo_frame_tag "conversation", class: "h-full flex flex-col", data: { turbo_action: "advance" } do %>
+            <%= render 'empty_conversation_state' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

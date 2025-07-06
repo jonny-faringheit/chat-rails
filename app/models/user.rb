@@ -10,7 +10,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :conversation_participants, dependent: :destroy
-  has_many :conversations, through: :conversation_participants
+  has_many :conversations, -> { extending Extensions::FindAllConversationsWithUserExtension },
+                           through: :conversation_participants
   has_many :sent_messages, class_name: "Message", foreign_key: :sender_id, dependent: :destroy
 
   has_one_attached :avatar
@@ -25,6 +26,8 @@ class User < ApplicationRecord
   validates :country, length: { maximum: 50 }, allow_blank: true
   validates :city, length: { maximum: 50 }, allow_blank: true
   validate :avatar_validation, if: -> { avatar.attached? }
+
+  before_create :set_initial_last_seen_at
 
   def full_name_present?
     first_name.present? && last_name.present?
@@ -57,7 +60,23 @@ class User < ApplicationRecord
     login
   end
 
+  def mark_as_online!
+    update_columns(online: true, last_seen_at: Time.current)
+  end
+
+  def mark_as_offline!
+    update_columns(online: false, last_seen_at: Time.current)
+  end
+
+  def online_status
+    online? ? 'online' : 'offline'
+  end
+
   private
+
+  def set_initial_last_seen_at
+    self.last_seen_at ||= Time.current
+  end
 
   def avatar_validation
     return unless avatar.attached?

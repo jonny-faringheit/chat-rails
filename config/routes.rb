@@ -14,20 +14,20 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'mains#index'
 
-  resources :messages, only: [:index, :show] do
-    resources :messages, only: [:create]
-  end
+  get '/chats', to: 'conversations#index', as: :chats
+  get '/chats/:receiver', to: 'conversations#show', as: :show_chat
+  post '/chats/:receiver', to: 'conversations#create', as: :new_chat
+  
+  resources :messages, only: [:create]
 
-  resources :videos
+  resources :videos, only: [:index]
   resources :musics, only: [:index]
 
-  resources :conversations, only: [:create]
-
   resources :achievements, only: [:index]
-  
+
   # User search endpoint
   get '/users/search', to: 'users#search', as: :search_users
-  
+
   # User profiles with username in URL
   get '/:username', to: 'users#show', as: :user, constraints: { username: /[a-zA-Z0-9._-]+/ }
 end

@@ -1,0 +1,85 @@
+<div class="h-full bg-white rounded-lg shadow-sm overflow-hidden flex flex-col">
+  <div class="p-4 border-b border-gray-200">
+    <h2 class="text-lg font-semibold text-gray-900">Чаты</h2>
+  </div>
+  
+  <div class="flex-1 overflow-y-auto">
+    <% if conversations.any? %>
+    <ul class="divide-y divide-gray-200">
+      <% conversations.each do |conversation| %>
+        <% other_user = conversation.interlocutor_for(current_user) %>
+        <% last_message = conversation.last_message %>
+        <% is_selected = defined?(current_conversation) && current_conversation == conversation %>
+        
+        <li class="relative">
+          <%= link_to show_chat_path(other_user.login), 
+              data: { turbo_frame: "conversation" },
+              class: "block hover:bg-gray-50 px-4 py-3 transition-all duration-200 #{is_selected ? 'bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 shadow-sm' : 'border-l-4 border-transparent'}" do %>
+            <div class="flex items-center">
+              <!-- Avatar with online indicator -->
+              <div class="flex-shrink-0 relative">
+                <div class="h-10 w-10 rounded-full <%= is_selected ? 'ring-2 ring-blue-500 ring-offset-2' : '' %> transition-all duration-200">
+                  <% if other_user.avatar.attached? %>
+                    <%= image_tag other_user.avatar, class: "w-full h-full rounded-full object-cover" %>
+                  <% else %>
+                    <div class="w-full h-full rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold">
+                      <%= other_user.full_name_present? ? other_user.full_name.chars.first.upcase : other_user.email.chars.first.upcase %>
+                    </div>
+                  <% end %>
+                </div>
+                <% if other_user.online? %>
+                  <div class="absolute bottom-0 right-0 h-3 w-3 bg-green-400 border-2 border-white rounded-full"></div>
+                <% end %>
+              </div>
+              
+              <!-- Content -->
+              <div class="ml-3 flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <p class="text-sm font-medium <%= is_selected ? 'text-blue-900' : 'text-gray-900' %> truncate transition-colors duration-200">
+                    <%= other_user.full_name_present? ? other_user.full_name : other_user.email %>
+                  </p>
+                  <% if last_message %>
+                    <p class="text-xs <%= is_selected ? 'text-blue-600' : 'text-gray-500' %> transition-colors duration-200">
+                      <%= time_ago_in_words(last_message.created_at) %>
+                    </p>
+                  <% end %>
+                </div>
+                
+                <% if last_message %>
+                  <p class="text-sm <%= is_selected ? 'text-blue-700' : 'text-gray-600' %> truncate transition-colors duration-200">
+                    <% if last_message.sender == current_user %>
+                      <span class="<%= is_selected ? 'text-blue-600' : 'text-gray-500' %>">Вы:</span>
+                    <% end %>
+                    <%= last_message.content %>
+                  </p>
+                <% else %>
+                  <p class="text-sm <%= is_selected ? 'text-blue-600' : 'text-gray-400' %> italic transition-colors duration-200">
+                    Нет сообщений
+                  </p>
+                <% end %>
+              </div>
+              
+              <!-- Unread badge -->
+              <% unread = conversation.unread_count(current_user) %>
+              <% if unread > 0 %>
+                <div class="ml-2 flex-shrink-0">
+                  <span class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-xs font-medium <%= is_selected ? 'bg-blue-600 text-white' : 'bg-blue-500 text-white' %> transition-all duration-200">
+                    <%= unread %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="text-center py-8 px-4">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+      </svg>
+      <p class="mt-2 text-sm text-gray-500">Нет переписок</p>
+    </div>
+    <% end %>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_06_163848) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_06_184312) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -69,6 +69,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_163848) do
   create_table "conversations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "messages_count", default: 0, null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -231,10 +232,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_163848) do
     t.integer "current_xp", default: 0, null: false
     t.string "country"
     t.string "city"
+    t.boolean "online", default: false, null: false
+    t.datetime "last_seen_at"
     t.index ["current_xp"], name: "index_users_on_current_xp"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["level"], name: "index_users_on_level"
     t.index ["login"], name: "index_users_on_login", unique: true
+    t.index ["online"], name: "index_users_on_online"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
