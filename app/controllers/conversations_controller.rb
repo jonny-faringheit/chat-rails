@@ -42,12 +42,16 @@ class ConversationsController < ApplicationController
 
   def all_conversations_of_user
     @conversations = Conversation.for_user(current_user)
-                                 .includes(:participants, :messages)
-                                 .order(updated_at: :desc)
+                                .includes(
+                                  :participants,
+                                  :last_message_association,
+                                  participants: { avatar_attachment: :blob }
+                                )
+                                .order(updated_at: :desc)
   end
 
   def set_conversation
-    @conversation = Conversation.between_users(current_user, @interlocutor).first
+    @conversation = Conversation.between_users([current_user, @interlocutor])
   end
 
   def set_interlocutor
@@ -55,7 +59,7 @@ class ConversationsController < ApplicationController
   end
 
   def find_or_create_conversation
-    @conversation ||= Conversation.between_users(current_user, @interlocutor).first
+    @conversation ||= Conversation.between_users([current_user, @interlocutor])
 
     unless @conversation
       @conversation = Conversation.create!
@@ -66,7 +70,12 @@ class ConversationsController < ApplicationController
   end
 
   def mark_messages_as_read(messages)
-    messages.where.not(sender: current_user).where(read: false).update_all(read: true)
+    unread_messages = messages.where.not(sender: current_user).where(read: false)
+    if unread_messages.update_all(read: true) > 0
+      ConversationParticipant
+        .where(conversation_id: @conversation.id, user_id: current_user.id)
+        .update_all(unread_messages_count: 0)
+    end
   end
 
   def user_not_found

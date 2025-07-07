@@ -7,6 +7,7 @@ class Message < ApplicationRecord
   scope :unread, -> { where(read: false) }
 
   after_create_commit -> { broadcast_message }
+  after_create_commit :increment_unread_counters
 
   private
 
@@ -15,5 +16,11 @@ class Message < ApplicationRecord
                        target: "messages",
                        partial: "messages/message",
                        locals: { message: self, current_user: nil, conversation: conversation }
+  end
+  
+  def increment_unread_counters
+    conversation.conversation_participants
+      .where.not(user_id: sender_id)
+      .update_all('unread_messages_count = unread_messages_count + 1')
   end
 end

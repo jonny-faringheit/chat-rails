@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get '/chats', to: 'conversations#index', as: :chats
   get '/chats/:receiver', to: 'conversations#show', as: :show_chat
   post '/chats/:receiver', to: 'conversations#create', as: :new_chat
-  
+
   resources :messages, only: [:create]
 
   resources :videos, only: [:index]

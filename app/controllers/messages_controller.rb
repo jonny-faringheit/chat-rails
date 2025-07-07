@@ -24,13 +24,11 @@ class MessagesController < ApplicationController
   private
 
   def set_conversation
-    @conversation = Conversation
-      .includes(:participants)
-      .find(params[:message][:conversation_id])
+    @conversation = Conversation.find_with_participants(params[:message][:conversation_id])
   end
 
   def ensure_participant!
-    unless participant?
+    unless @conversation.has_participant?(current_user)
       redirect_to chats_path, alert: 'Вы не являетесь участником этого чата'
     end
   end
@@ -38,10 +36,6 @@ class MessagesController < ApplicationController
   def build_message
     @message = @conversation.messages.build(message_params)
     @message.sender = current_user
-  end
-
-  def participant?
-    @conversation.participants.include?(current_user)
   end
 
   def interlocutor
