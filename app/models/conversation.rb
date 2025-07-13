@@ -16,7 +16,7 @@ class Conversation < ApplicationRecord
     joins(:conversation_participants)
       .where(conversation_participants: { user_id: [user_1.id, user_2.id] })
       .group('conversations.id')
-      .having('COUNT(DISTINCT conversation_participants.user_id) = 2 
+      .having('COUNT(DISTINCT conversation_participants.user_id) = 2
                AND COUNT(conversation_participants.id) = 2')
       .first
   end

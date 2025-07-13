@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_07_233329) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_10_000458) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
+  enable_extension "unaccent"
 
   create_table "achievements", force: :cascade do |t|
     t.string "name", null: false
@@ -242,10 +243,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_07_233329) do
     t.datetime "last_seen_at"
     t.index ["current_xp"], name: "index_users_on_current_xp"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["first_name", "last_name", "login"], name: "index_users_on_names_trigram", opclass: :gin_trgm_ops, using: :gin
+    t.index ["first_name"], name: "index_users_on_first_name_trigram", opclass: :gin_trgm_ops, using: :gin
+    t.index ["last_name"], name: "index_users_on_last_name_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["last_seen_at"], name: "index_users_on_last_seen_at_where_online", where: "(online = true)"
     t.index ["level"], name: "index_users_on_level"
     t.index ["login"], name: "index_users_on_login", unique: true
+    t.index ["login"], name: "index_users_on_login_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["online"], name: "index_users_on_online"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

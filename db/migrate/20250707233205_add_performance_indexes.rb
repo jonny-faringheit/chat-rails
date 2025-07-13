@@ -1,5 +1,5 @@
 class AddPerformanceIndexes < ActiveRecord::Migration[8.0]
-  def change
+  def up
     # Composite index for unread message queries
     add_index :messages, [:conversation_id, :read, :sender_id], name: 'index_messages_on_conversation_read_sender'
 
@@ -19,8 +19,19 @@ class AddPerformanceIndexes < ActiveRecord::Migration[8.0]
     enable_extension 'pg_trgm' unless extension_enabled?('pg_trgm')
 
     # Add trigram index for user search
-    add_index :users, "first_name gin_trgm_ops, last_name gin_trgm_ops, login gin_trgm_ops",
-              using: :gin,
-              name: 'index_users_on_names_trigram'
+    execute <<-SQL
+      CREATE INDEX index_users_on_names_trigram ON users#{' '}
+      USING gin ((COALESCE(first_name, '') || ' ' || COALESCE(last_name, '') || ' ' || COALESCE(login, '')) gin_trgm_ops);
+    SQL
+  end
+
+  def down
+    execute "DROP INDEX IF EXISTS index_users_on_names_trigram;"
+
+    remove_index :conversations, name: 'index_conversations_on_updated_at_desc', if_exists: true
+    remove_index :messages, name: 'index_messages_unread', if_exists: true
+    remove_index :users, name: 'index_users_on_last_seen_at_where_online', if_exists: true
+    remove_index :messages, name: 'index_messages_on_conversation_created_desc', if_exists: true
+    remove_index :messages, name: 'index_messages_on_conversation_read_sender', if_exists: true
   end
 end

@@ -9,6 +9,7 @@ gem 'tailwindcss-rails'
 gem 'rack-attack'
 gem 'browser'
 gem 'whenever'
+gem 'enumerize'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
@@ -16,6 +17,7 @@ gem "rails", "~> 8.0.1"
 gem "propshaft"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
+gem 'pg_search'
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -35,8 +37,13 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
-gem "solid_queue"
+# gem "solid_queue" # Replaced with Sidekiq
 gem "solid_cable"
+
+# Use Sidekiq for background jobs
+gem "sidekiq", "~> 7.3"
+gem "sidekiq-unique-jobs"
+gem "redis", "~> 5.0"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

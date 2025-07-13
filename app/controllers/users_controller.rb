@@ -10,10 +10,7 @@ class UsersController < ApplicationController
   def search
     query = params[:q].to_s.strip
     if query.present?
-      @users = User.where(
-        "first_name ILIKE :query OR last_name ILIKE :query OR login ILIKE :query",
-        query: "%#{query}%"
-      ).limit(10)
+      @users = User.search_record_with_trigram(query).limit(10)
     else
       @users = []
     end

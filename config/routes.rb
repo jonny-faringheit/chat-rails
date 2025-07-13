@@ -1,4 +1,11 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  # Sidekiq web UI - protect with authentication in production
+  authenticate :user do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   devise_for :users, module: "users", path_names: {
     sign_in: "signin", sign_out: "logout", sign_up: "signup"

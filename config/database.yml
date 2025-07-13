@@ -31,10 +31,11 @@ development:
     <<: *default
     database: chat_app_cable
     migrations_paths: db/cable_migrate
-  queue:
-    <<: *default
-    database: chat_app_queue
-    migrations_paths: db/queue_migrate
+  # queue database is no longer needed with Sidekiq
+  # queue:
+  #   <<: *default
+  #   database: chat_app_queue
+  #   migrations_paths: db/queue_migrate
   cache:
     <<: *default
     database: chat_app_cache
@@ -74,10 +75,11 @@ production:
     <<: *primary_production
     database: chat_app_production_cache
     migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: chat_app_production_queue
-    migrations_paths: db/queue_migrate
+  # queue database is no longer needed with Sidekiq
+  # queue:
+  #   <<: *primary_production
+  #   database: chat_app_production_queue
+  #   migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
     database: chat_app_production_cable

@@ -1,8 +1,12 @@
 class User < ApplicationRecord
+  include PgSearchWithTrigram
   include LoginGenerator
   include DateOfBirthGenerator
   include Achievable
   include Levelable
+
+  # PgSearch configuration
+  enable_pg_trigram_search(against: [:first_name, :last_name, :login])
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -25,35 +29,25 @@ class User < ApplicationRecord
   validates :date_of_birth, date_check: true, on: :update
   validates :country, length: { maximum: 50 }, allow_blank: true
   validates :city, length: { maximum: 50 }, allow_blank: true
-  validate :avatar_validation, if: -> { avatar.attached? }
+  validates :avatar, avatar: true, if: -> { avatar.attached? }
 
   before_create :set_initial_last_seen_at
+  after_update :clear_memoized_values, if: :saved_change_to_first_name_or_last_name?
 
   def full_name_present?
     first_name.present? && last_name.present?
   end
 
   def full_name
-    if first_name.present? && last_name.present?
-      "#{first_name} #{last_name}"
-    else
-      'not specified'
-    end
+    @full_name ||= Users::NameFormatter.new(self).call
   end
 
   def age_present?
-    date_of_birth.present? ? self.age : false
+    date_of_birth.present?
   end
 
   def age
-    if date_of_birth.present?
-      now = Time.zone.now
-      age = now.year - date_of_birth.year
-      age -= 1 if (now.month < date_of_birth.month) || (now.month == date_of_birth.month && now.day < date_of_birth.day)
-      age
-    else
-      'not specified'
-    end
+    @age ||= Users::AgeCalculator.new(self.date_of_birth).call
   end
 
   def to_param
@@ -78,15 +72,12 @@ class User < ApplicationRecord
     self.last_seen_at ||= Time.current
   end
 
-  def avatar_validation
-    return unless avatar.attached?
+  def clear_memoized_values
+    @full_name = nil
+    @age = nil if saved_change_to_date_of_birth?
+  end
 
-    unless avatar.content_type.in?(%w[image/jpeg image/jpg image/png image/gif])
-      errors.add(:avatar, "должно быть в формате JPEG, PNG или GIF")
-    end
-
-    if avatar.byte_size > 5.megabytes
-      errors.add(:avatar, "должно быть меньше 5MB")
-    end
+  def saved_change_to_first_name_or_last_name?
+    saved_change_to_first_name? || saved_change_to_last_name?
   end
 end

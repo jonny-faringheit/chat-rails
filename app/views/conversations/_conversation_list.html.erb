@@ -7,27 +7,27 @@
     <% if conversations.any? %>
     <ul class="divide-y divide-gray-200">
       <% conversations.each do |conversation| %>
-        <% other_user = conversation.interlocutor_for(current_user) %>
+        <% interlocutor = conversation.interlocutor_for(current_user) %>
         <% last_message = conversation.last_message %>
         <% is_selected = defined?(current_conversation) && current_conversation == conversation %>
         
         <li class="relative">
-          <%= link_to show_chat_path(other_user.login), 
+          <%= link_to show_chat_path(interlocutor.login), 
               data: { turbo_frame: "conversation" },
               class: "block hover:bg-gray-50 px-4 py-3 transition-all duration-200 #{is_selected ? 'bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 shadow-sm' : 'border-l-4 border-transparent'}" do %>
             <div class="flex items-center">
               <!-- Avatar with online indicator -->
               <div class="flex-shrink-0 relative">
                 <div class="h-10 w-10 rounded-full <%= is_selected ? 'ring-2 ring-blue-500 ring-offset-2' : '' %> transition-all duration-200">
-                  <% if other_user.avatar.attached? %>
-                    <%= image_tag other_user.avatar, class: "w-full h-full rounded-full object-cover" %>
+                  <% if interlocutor.avatar.attached? %>
+                    <%= image_tag interlocutor.avatar, class: "w-full h-full rounded-full object-cover" %>
                   <% else %>
                     <div class="w-full h-full rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold">
-                      <%= other_user.full_name_present? ? other_user.full_name.chars.first.upcase : other_user.email.chars.first.upcase %>
+                      <%= interlocutor.full_name_present? ? interlocutor.full_name.chars.first.upcase : interlocutor.email.chars.first.upcase %>
                     </div>
                   <% end %>
                 </div>
-                <% if other_user.online? %>
+                <% if interlocutor.online? %>
                   <div class="absolute bottom-0 right-0 h-3 w-3 bg-green-400 border-2 border-white rounded-full"></div>
                 <% end %>
               </div>
@@ -36,7 +36,7 @@
               <div class="ml-3 flex-1 min-w-0">
                 <div class="flex items-center justify-between">
                   <p class="text-sm font-medium <%= is_selected ? 'text-blue-900' : 'text-gray-900' %> truncate transition-colors duration-200">
-                    <%= other_user.full_name_present? ? other_user.full_name : other_user.email %>
+                    <%= interlocutor.full_name_present? ? interlocutor.full_name : interlocutor.email %>
                   </p>
                   <% if last_message %>
                     <p class="text-xs <%= is_selected ? 'text-blue-600' : 'text-gray-500' %> transition-colors duration-200">
