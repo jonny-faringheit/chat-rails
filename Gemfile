@@ -41,7 +41,7 @@ gem "solid_cache"
 gem "solid_cable"
 
 # Use Sidekiq for background jobs
-gem "sidekiq", "~> 7.3"
+gem "sidekiq", "~> 8.0"
 gem "sidekiq-unique-jobs"
 gem "redis", "~> 5.0"
 
