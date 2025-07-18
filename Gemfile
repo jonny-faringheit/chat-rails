@@ -43,7 +43,7 @@ gem "solid_cable"
 # Use Sidekiq for background jobs
 gem "sidekiq", "~> 7.3"
 gem "sidekiq-unique-jobs"
-gem "redis", "~> 5.0"
+gem "redis", "~> 5.4"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
