@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby file: './.tool-versions'
+
 gem 'dotenv-rails'
 gem 'devise'
 gem 'valid_email2'
@@ -41,9 +43,13 @@ gem "solid_cache"
 gem "solid_cable"
 
 # Use Sidekiq for background jobs
-gem "sidekiq", "~> 7.3"
+gem "sidekiq", "~> 8.0"
 gem "sidekiq-unique-jobs"
-gem "redis", "~> 5.0"
+
+# Use Redis for caching, session storage, and Action Cable
+gem "redis"
+gem "redis-namespace"
+gem "redis-session-store"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

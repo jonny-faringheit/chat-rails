@@ -39,7 +39,7 @@ class User < ApplicationRecord
   end
 
   def full_name
-    @full_name ||= Users::NameFormatter.new(self).call
+    @full_name ||= Users::NameFormatter.new(self).full_name
   end
 
   def age_present?

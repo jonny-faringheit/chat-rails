@@ -1,7 +1,6 @@
 import consumer from "channels/consumer"
 
 consumer.subscriptions.create({channel: "ChatChannel"}, {
-  
   connected() {
     // Called when the subscription is ready for use on the server
     console.log("connected")
@@ -13,6 +12,6 @@ consumer.subscriptions.create({channel: "ChatChannel"}, {
 
   received(data) {
     // This method is called when there's incoming data on the channel
-    console.log(data)
+    console.log(data);
   }
 });
