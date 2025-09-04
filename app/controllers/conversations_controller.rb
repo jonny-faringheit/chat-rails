@@ -9,24 +9,9 @@ class ConversationsController < ApplicationController
   def index;end
 
   def show
-    unless @conversation
-      if request.format.turbo_stream?
-        render turbo_stream: turbo_stream.replace("conversation", partial: "empty_conversation_state")
-        return
-      else
-        redirect_to chats_path, alert: 'Conversation not found'
-        return
-      end
-    end
-
-    @messages = @conversation.ordered_messages
-    mark_messages_as_read(@messages)
-    @message = @conversation.messages.new
-
-    # For full page load, redirect to index with params
-    if !turbo_frame_request?
-      redirect_to chats_path
-    end
+    return handle_missing_conversation unless @conversation
+    prepare_conversation_data
+    redirect_unless_turbo_frame
   end
 
   def create
@@ -40,6 +25,27 @@ class ConversationsController < ApplicationController
 
   private
 
+  def handle_missing_conversation
+    if request.format.turbo_stream?
+      render turbo_stream: turbo_stream.replace(
+        "conversation",
+        partial: "empty_conversation_state"
+      )
+    else
+      redirect_to chats_path, alert: 'Conversation not found'
+    end
+  end
+
+  def prepare_conversation_data
+    @messages = @conversation.ordered_messages
+    mark_messages_as_read(@messages)
+    @message = @conversation.messages.new
+  end
+
+  def redirect_unless_turbo_frame
+    redirect_to chats_path unless turbo_frame_request?
+  end
+
   def all_conversations_of_user
     @conversations = Conversation.for_user(current_user)
                                 .includes(
@@ -51,7 +57,7 @@ class ConversationsController < ApplicationController
   end
 
   def set_conversation
-    @conversation = Conversation.between_users([current_user, @interlocutor])
+    @conversation = Conversation.between_users([current_user, @interlocutor]).first
   end
 
   def set_interlocutor
@@ -60,12 +66,7 @@ class ConversationsController < ApplicationController
 
   def find_or_create_conversation
     @conversation ||= Conversation.between_users([current_user, @interlocutor])
-
-    unless @conversation
-      @conversation = Conversation.create!
-      @conversation.participants << [current_user, @interlocutor]
-    end
-
+    @conversation = Conversation.create!(participants: [current_user, @interlocutor]) unless @conversation
     @conversation
   end
 

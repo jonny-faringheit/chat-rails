@@ -27,13 +27,13 @@
 
     <!-- Message Input -->
     <div class="bg-white border-t px-6 py-4 flex-shrink-0">
-      <%= form_with model: [conversation, message], url: message_messages_path(conversation), local: false, class: "flex items-end gap-3" do |form| %>
+      <%= form_with model: [conversation, message], url: create_message_in_chat_path(receiver), local: false, class: "flex items-end gap-3" do |form| %>
         <div class="flex-1">
-          <%= form.text_area :content, 
+          <%= form.text_area :content,
               rows: 1,
               placeholder: "Введите сообщение...",
               class: "block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm resize-none",
-              data: { 
+              data: {
                 controller: "autogrow",
                 action: "input->autogrow#resize"
               },
@@ -48,7 +48,7 @@
       <% end %>
     </div>
   </div>
-  
+
   <%= turbo_stream_from conversation %>
 <% else %>
   <!-- Empty state when no conversation selected -->

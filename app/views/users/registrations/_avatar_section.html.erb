@@ -1,19 +1,19 @@
 <!-- Profile Header with Avatar -->
 <div class="flex items-center space-x-3 pb-4 border-b border-gray-200">
-  <%= render "shared/avatar/display", 
-      user: current_user, 
-      size: "w-16 h-16", 
+  <%= render "shared/avatar/display",
+      user: current_user,
+      size: "w-16 h-16",
       editable: true,
       preview_id: "avatar-preview",
       input_id: "user_avatar" %>
-  
+
   <div class="flex-1">
     <h1 class="text-base font-medium text-gray-900">
       <%= current_user.full_name_present? ? current_user.full_name : current_user.email.split('@')[0] %>
     </h1>
   </div>
-  
-  <%= form.file_field :avatar, 
+
+  <%= form.file_field :avatar,
       id: "user_avatar",
       accept: "image/*",
       class: "hidden" %>

@@ -6,7 +6,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
       </svg>
     <% end %>
-    
+
     <!-- Messages -->
     <%= link_to messages_path, class: "flex items-center p-2 relative" do %>
       <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -14,14 +14,14 @@
       </svg>
       <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
     <% end %>
-    
+
     <!-- Achievements -->
     <%= link_to achievements_path, class: "flex items-center p-2" do %>
       <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
       </svg>
     <% end %>
-    
+
     <!-- Profile -->
     <%= link_to user_path(username: current_user.login), class: "flex items-center p-2" do %>
       <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Settings and Logout -->
     <nav class="py-2">
       <%= link_to edit_user_registration_path, class: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-100" do %>
@@ -61,7 +61,7 @@
         </svg>
         <span>Настройки</span>
       <% end %>
-      
+
       <%= button_to destroy_user_session_path, method: :delete, class: "flex items-center w-full px-4 py-2.5 text-red-600 hover:bg-red-50" do %>
         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>

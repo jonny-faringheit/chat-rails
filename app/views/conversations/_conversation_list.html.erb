@@ -2,7 +2,7 @@
   <div class="p-4 border-b border-gray-200">
     <h2 class="text-lg font-semibold text-gray-900">Чаты</h2>
   </div>
-  
+
   <div class="flex-1 overflow-y-auto">
     <% if conversations.any? %>
     <ul class="divide-y divide-gray-200">
@@ -10,9 +10,9 @@
         <% interlocutor = conversation.interlocutor_for(current_user) %>
         <% last_message = conversation.last_message %>
         <% is_selected = defined?(current_conversation) && current_conversation == conversation %>
-        
+
         <li class="relative">
-          <%= link_to show_chat_path(interlocutor.login), 
+          <%= link_to show_chat_path(interlocutor.login),
               data: { turbo_frame: "conversation" },
               class: "block hover:bg-gray-50 px-4 py-3 transition-all duration-200 #{is_selected ? 'bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 shadow-sm' : 'border-l-4 border-transparent'}" do %>
             <div class="flex items-center">
@@ -31,7 +31,7 @@
                   <div class="absolute bottom-0 right-0 h-3 w-3 bg-green-400 border-2 border-white rounded-full"></div>
                 <% end %>
               </div>
-              
+
               <!-- Content -->
               <div class="ml-3 flex-1 min-w-0">
                 <div class="flex items-center justify-between">
@@ -44,7 +44,7 @@
                     </p>
                   <% end %>
                 </div>
-                
+
                 <% if last_message %>
                   <p class="text-sm <%= is_selected ? 'text-blue-700' : 'text-gray-600' %> truncate transition-colors duration-200">
                     <% if last_message.sender == current_user %>
@@ -58,7 +58,7 @@
                   </p>
                 <% end %>
               </div>
-              
+
               <!-- Unread badge -->
               <% unread = conversation.unread_count(current_user) %>
               <% if unread > 0 %>

@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "conversation", class: "h-full flex flex-col" do %>
-  <%= render 'conversation_section', 
-      conversation: @conversation, 
-      messages: @messages, 
+  <%= render 'conversation_section',
+      conversation: @conversation,
+      messages: @messages,
       message: @message,
       interlocutor: @interlocutor %>
 <% end %>

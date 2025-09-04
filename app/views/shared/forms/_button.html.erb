@@ -1,9 +1,8 @@
 <%# Generic button component %>
 <%# Usage: render "shared/forms/button", text: "Save", type: "submit", style: "primary" %>
 
-<%
   base_classes = "px-4 py-2 text-sm font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 cursor-pointer"
-  
+
   style_classes = case local_assigns[:style]
   when "primary"
     "text-white bg-orange-500 hover:bg-orange-600 focus:ring-orange-500"
@@ -14,7 +13,7 @@
   else
     "text-white bg-orange-500 hover:bg-orange-600 focus:ring-orange-500"
   end
-  
+
   all_classes = [base_classes, style_classes, local_assigns[:class]].compact.join(" ")
 %>
 

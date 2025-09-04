@@ -3,11 +3,11 @@
     const avatarInput = document.getElementById('user_avatar');
     const avatarPreview = document.getElementById('avatar-preview');
     const removeButton = document.getElementById('remove-avatar');
-    
+
     if (!avatarInput || !avatarPreview || !removeButton) return;
-    
+
     let originalAvatarHTML = avatarPreview.innerHTML;
-    
+
     avatarInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
@@ -17,7 +17,7 @@
           this.value = '';
           return;
         }
-        
+
         // Проверка типа файла
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
         if (!allowedTypes.includes(file.type)) {
@@ -25,7 +25,7 @@
           this.value = '';
           return;
         }
-        
+
         const reader = new FileReader();
         reader.onload = function(e) {
           avatarPreview.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover" alt="Предпросмотр нового аватара">`;
@@ -34,7 +34,7 @@
         reader.readAsDataURL(file);
       }
     });
-    
+
     removeButton.addEventListener('click', function() {
       avatarInput.value = '';
       avatarPreview.innerHTML = originalAvatarHTML;

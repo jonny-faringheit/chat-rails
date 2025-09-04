@@ -18,7 +18,6 @@ class Conversation < ApplicationRecord
       .group('conversations.id')
       .having('COUNT(DISTINCT conversation_participants.user_id) = 2
                AND COUNT(conversation_participants.id) = 2')
-      .first
   end
 
   def self.find_with_participants(conversation_id)
@@ -59,7 +58,7 @@ class Conversation < ApplicationRecord
   def unique_conversation_between_users
     return unless participants.size == 2
 
-    existing = Conversation.between_users(participants.first, participants.last).exists?
+    existing = Conversation.between_users([participants.first, participants.last])&.exists?
     errors.add(:base, "Conversation already exists between these users") if existing
   end
 end

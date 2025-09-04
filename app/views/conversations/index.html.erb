@@ -8,7 +8,7 @@
         <div class="w-80 flex-shrink-0 h-full">
           <%= render 'conversation_list', conversations: @conversations %>
         </div>
-        
+
         <!-- Right section - Messages (Turbo Frame) -->
         <div class="flex-1 bg-gray-50 rounded-lg shadow-sm overflow-hidden h-full">
           <%= turbo_frame_tag "conversation", class: "h-full flex flex-col", data: { turbo_action: "advance" } do %>

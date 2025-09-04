@@ -13,19 +13,19 @@
       </div>
     </div>
   <% end %>
-  <% else %>
-    <div class="block px-4 py-6 transition-colors">
-      <div class="flex flex-col items-center text-center">
-        <div class="mb-3">
-          <%= render "shared/avatar/display", user: current_user, size: "w-20 h-20" %>
+<% else %>
+  <div class="block px-4 py-6 transition-colors">
+    <div class="flex flex-col items-center text-center">
+      <div class="mb-3">
+        <%= render "shared/avatar/display", user: current_user, size: "w-20 h-20" %>
+      </div>
+      <div class="w-full">
+        <div class="font-medium text-base text-gray-900 truncate">
+          <%= current_user.full_name_present? ? current_user.full_name : current_user.login %>
         </div>
-        <div class="w-full">
-          <div class="font-medium text-base text-gray-900 truncate">
-            <%= current_user.full_name_present? ? current_user.full_name : current_user.login %>
-          </div>
-          <div class="text-sm text-gray-500 truncate"><%= masked_email(current_user.email) %></div>
-        </div>
+        <div class="text-sm text-gray-500 truncate"><%= masked_email(current_user.email) %></div>
       </div>
     </div>
+  </div>
 <% end %>
 <!-- User profile section end -->

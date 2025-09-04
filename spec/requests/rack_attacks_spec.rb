@@ -15,10 +15,10 @@ RSpec.describe "Rate limiting with Rack::Attack", type: :request do
 
   it "limits sign in requests by IP address" do
     valid_params = { user: { email: "test@example.com", password: "password" } }
-    
+
     5.times do
       post "/users/signin", params: valid_params, headers: { "REMOTE_ADDR" => ip }
-      expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
     end
 
     post "/users/signin", params: valid_params, headers: { "REMOTE_ADDR" => ip }
@@ -30,7 +30,7 @@ RSpec.describe "Rate limiting with Rack::Attack", type: :request do
       valid_params = { user: { email: "test#{i}@example.com", password: "password123" } }
       post "/users/signup", params: valid_params, headers: { "REMOTE_ADDR" => ip }
     end
-    
+
     expect(response).to have_http_status(:too_many_requests)
   end
 end
