@@ -1,29 +1,31 @@
 class ChatChannel < ApplicationCable::Channel
-  before_subscribe :set_interlocutor, :set_conversation, if: :websocket_connected?
+  before_subscribe :set_interlocutor, if: -> { params[:interlocutor].present? }
 
   def subscribed
-    # Start streaming for the conversation
-    stream_for @conversation
+    # Start streaming for the current user
+    stream_for current_user if websocket_connected?
   end
 
   def unsubscribed
     # Stop streaming for the conversation
-    stop_stream_for @conversation
+    stop_all_streams
   end
 
-  def received(data)
+  def receive(data)
+    # Handle incoming data (e.g., new message)
+    begin
+      CreateChatMessageJob.perform_async(current_user.id, @interlocutor.id, data["content"]) if @interlocutor && data["content"].present?
+    rescue => e
+      Rails.logger.error "Error processing received data: #{e.message}"
+    end
   end
 
   private
 
   def set_interlocutor
-    # Logic to find the interlocutor (the other user in the chat)
-    @interlocutor = User.find(params[:receive])
-  end
-
-  def set_conversation
-    # Logic to find the conversation between the current user and the interlocutor
-    @conversation = Conversation.between_users([current_user, @interlocutor]).first
+    # Find the interlocutor user by login
+    decrypted_login = SecureLoginService.decrypt(params[:interlocutor])
+    @interlocutor = User.find_by(login: decrypted_login)
   end
 
   def websocket_connected?

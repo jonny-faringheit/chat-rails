@@ -1,4 +1,4 @@
-module SecureIdService
+module SecureLoginService
   SECRET_KEY = Rails.application.key_generator.generate_key(ENV['SECURE_ID_SERVICE_KEY'], 32)
   ENCRYPTOR = ActiveSupport::MessageEncryptor.new(SECRET_KEY)
 

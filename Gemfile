@@ -12,6 +12,7 @@ gem 'rack-attack'
 gem 'browser'
 gem 'whenever'
 gem 'enumerize'
+gem 'error_highlight'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
@@ -50,6 +51,7 @@ gem "sidekiq-unique-jobs"
 gem "redis"
 gem "redis-namespace"
 gem "redis-session-store"
+gem "hiredis"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

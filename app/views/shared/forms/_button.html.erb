@@ -1,6 +1,6 @@
 <%# Generic button component %>
 <%# Usage: render "shared/forms/button", text: "Save", type: "submit", style: "primary" %>
-
+<%
   base_classes = "px-4 py-2 text-sm font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 cursor-pointer"
 
   style_classes = case local_assigns[:style]
@@ -16,7 +16,6 @@
 
   all_classes = [base_classes, style_classes, local_assigns[:class]].compact.join(" ")
 %>
-
 <% if local_assigns[:type] == "submit" %>
   <%= form.submit text, class: all_classes %>
 <% elsif local_assigns[:href] %>
