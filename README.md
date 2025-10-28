@@ -113,21 +113,25 @@ bin/rails db:seed
 
 ### 4. Настройка переменных окружения
 
-Создайте файл `.env` в корне проекта или используйте Rails credentials:
+Создайте файл `.env` в корне проекта:
 
 ```bash
-# Редактирование credentials
-bin/rails credentials:edit
+# Создайте .env файл для настройки БД, Redis, Sidekiq
+cp ./.env.example ./.env
 ```
 
 ### 5. Запуск приложения
 
 ```bash
-# Запуск с Tailwind CSS watcher
+# Запуск с Tailwind CSS watcher(рекомендуется)
 bin/dev
 
 # Или только Rails сервер
 bin/rails server
+bin/rails tailwindcss:watch
+
+# Запустите Sidekiq для фоновых задач
+bundle exec sidekiq --config config/sidekiq.yml
 ```
 
 Приложение будет доступно по адресу: <http://localhost:3000>
