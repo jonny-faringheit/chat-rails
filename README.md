@@ -1,4 +1,6 @@
-# BitChat - Real-time Chat Application
+<div align="center">
+  <h2 style="font-family: "Roboto", "Open Sans", sans-serif">BitChat - Real-time Chat Application</h2>
+</div>
 
 <div align="center">
   <h1>
@@ -70,7 +72,8 @@ BitChat - это современное веб-приложение для об�
 
 ## 📋 Требования
 
-- Ruby 3.3.6 или выше
+- Ruby 3.4.5 или выше
+- Rails 8.0.1 или выше
 - PostgreSQL 14 или выше
 - Redis 6 или выше
 - Node.js 18 или выше (для Tailwind CSS)
