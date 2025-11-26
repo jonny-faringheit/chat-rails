@@ -1,32 +1,13 @@
-<%= content_for :title, "BitChat | Редактирование профиля"
- %>
-<%= render "shared/layout/page_container", title: "Редактировать профиль"
-
-
- do %>
-  <%= form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: { method: :put, class: "space-y-6", multipart: true })
-
-
-
-
-
-
- do |f| %>
-    <%= render "users/shared/error_messages", resource: resource
- %>
-    <%= render "users/registrations/avatar_section", form: f
- %>
-    <%= render "users/registrations/personal_info_form", form: f
- %>
-    <%= render "users/registrations/password_section", form: f
- %>
-    <%= render "users/registrations/current_password_section", form: f
- %>
-    <%= render "users/registrations/form_actions", form: f
- %>
+<%= content_for :title, "BitChat | Редактирование профиля" %>
+<%= render "shared/layout/page_container", title: "Редактировать профиль" do %>
+  <%= form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: { method: :put, class: "space-y-6", multipart: true }) do |f| %>
+    <%= render "users/shared/error_messages", resource: resource %>
+    <%= render "users/registrations/avatar_section", form: f %>
+    <%= render "users/registrations/personal_info_form", form: f %>
+    <%= render "users/registrations/password_section", form: f %>
+    <%= render "users/registrations/current_password_section", form: f%>
+    <%= render "users/registrations/form_actions", form: f %>
   <% end %>
 <% end %>
-<%= render "users/registrations/danger_zone"
- %>
-<%= render "shared/avatar_upload_script"
- %>
+<%= render "users/registrations/danger_zone" %>
+<%= render "shared/avatar_upload_script" %>

@@ -4,11 +4,13 @@ class ChatChannel < ApplicationCable::Channel
   def subscribed
     # Start streaming for the current user
     stream_for current_user if websocket_connected?
+    current_user.update(online: true) if current_user.online?
   end
 
   def unsubscribed
     # Stop streaming for the conversation
     stop_all_streams
+    current_user.update(online: false)
   end
 
   def receive(data)

@@ -12,6 +12,7 @@
 /.claude/*
 CLAUDE.md
 image.png
+*.rdb
 
 # Ignore all environment files.
 /.env

@@ -3,16 +3,15 @@
   <%= render "shared/avatar/display",
       user: current_user,
       size: "w-16 h-16",
+      show_status: false,
       editable: true,
       preview_id: "avatar-preview",
       input_id: "user_avatar" %>
-
   <div class="flex-1">
     <h1 class="text-base font-medium text-gray-900">
       <%= current_user.full_name_present? ? current_user.full_name : current_user.email.split('@')[0] %>
     </h1>
   </div>
-
   <%= form.file_field :avatar,
       id: "user_avatar",
       accept: "image/*",
