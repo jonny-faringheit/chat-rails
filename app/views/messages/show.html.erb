@@ -1,6 +1,6 @@
 <div class="flex flex-col h-full bg-gray-50">
   <!-- Header -->
-  <div class="bg-white border-b flex-shrink-0">
+  <div class="bg-white border-b shrink-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between py-4">
         <div class="flex items-center">
@@ -11,7 +11,7 @@
           <% end %>
           <% other_user = @conversation.other_participant(current_user) %>
           <div class="flex items-center">
-            <div class="h-10 w-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold">
+            <div class="h-10 w-10 rounded-full bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold">
               <%= other_user.full_name_present? ? other_user.full_name.chars.first.upcase : other_user.email.chars.first.upcase %>
             </div>
             <div class="ml-3">
@@ -36,7 +36,7 @@
     </div>
   </div>
   <!-- Message Input -->
-  <div class="bg-white border-t flex-shrink-0">
+  <div class="bg-white border-t shrink-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <%= form_with model: [@conversation, @message], local: false, class: "flex items-end space-x-4" do |form| %>
         <div class="flex-1">
