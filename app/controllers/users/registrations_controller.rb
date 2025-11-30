@@ -6,7 +6,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    super
+    super do |resource|
+      render Views::Users::Registrations::NewView.new(resource: resource, resource_name: resource_name)
+      return
+    end
   end
 
   # POST /resource
@@ -38,7 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params

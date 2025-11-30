@@ -2,17 +2,21 @@
 
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  layout -> { Views::Layouts::ApplicationLayout }
   respond_to :html
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+    self.resource = resource_class.new(sign_in_params)
+    clean_up_passwords(resource)
+    yield resource if block_given?
+    render Views::Users::Sessions::NewView.new resource: resource, resource_name: resource_name, controller_name: controller_name, devise_mapping: devise_mapping
+  end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+  end
 
   # DELETE /resource/sign_out
   def destroy

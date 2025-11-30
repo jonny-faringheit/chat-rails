@@ -1,7 +1,7 @@
 module Views
   module Shared
     module Header
-      class LogoHeaderPartial < Views::Base
+      class LogoSection < Views::Base
         include Phlex::SVG::StandardElements
         include Phlex::Rails::Helpers::LinkTo
         include Phlex::Rails::Helpers::Routes
@@ -11,7 +11,7 @@ module Views
               icon_wrapper do
                 chat_icon
               end
-              span(class: "text-xl font-bold text-white") { plain "BitChat" }
+              span(class: "font-['Dancing_Script'] text-3xl font-bold text-white") { plain "ChaTik" }
             end
           end
         end

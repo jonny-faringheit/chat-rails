@@ -1,7 +1,7 @@
 module Views
   module Shared
     module Menu
-      class SlideMenuPartial < Views::Base
+      class SlideMenu < Views::Base
         include Phlex::SVG::StandardElements
         def view_template
           div(class: "fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col", data_slide_menu_target: "menu") do
@@ -22,9 +22,9 @@ module Views
           end
           # Scrollable content area
           div(class: "flex-1 overflow-y-auto") do
-            render Views::Shared::Menu::UserProfileSectionPartial
-            render Views::Shared::Menu::UserExperienceSectionPartial
-            render Views::Shared::Menu::NavigationMenuSectionPartial
+            render Views::Shared::Menu::UserProfileSection
+            render Views::Shared::Menu::UserExperienceSection
+            render Views::Shared::Menu::NavigationMenuSection
           end
           render Views::Shared::Menu::LogoutSection
         end

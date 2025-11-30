@@ -31,7 +31,7 @@ module Views
             javascript_importmap_tags
           end
           body(class: "h-screen flex flex-col") do
-            render Views::Shared::Header::HeaderPartial if current_user
+            render Views::Shared::Header::Header if current_user
             main(class: "flex-1 overflow-auto") do
               yield
             end
@@ -43,12 +43,14 @@ module Views
 
       def generate_meta_tags
         title { content_for(:title) || "BitChat" }
-        plain content_for(:session_fonts) if content_for?(:session_fonts)
         meta(name: "viewport", content: "width=device-width,initial-scale=1")
         meta(name: "apple-mobile-web-app-capable", content: "yes")
         meta(name: "mobile-web-app-capable", content: "yes")
-        link(rel: "icon", href: "/icon.png", type: "image/png")
-        link(rel: "apple-touch-icon", href: "/icon.png")
+        link(href: "/icon.png", type: "image/png", rel: "icon")
+        link(href: "/icon.png", rel: "apple-touch-icon")
+        link(href: "https://fonts.googleapis.com", rel: "preconnect")
+        link(href: "https://fonts.gstatic.com", rel: "preconnect", crossorigin: true)
+        link(href: "https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap", rel: "stylesheet")
       end
 
       def include_css_styles

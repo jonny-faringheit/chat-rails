@@ -1,7 +1,7 @@
 module Views
   module Shared
     module Header
-      class NavigationHeaderPartial < Views::Base
+      class NavigationSection < Views::Base
         include Phlex::Rails::Helpers::LinkToUnlessCurrent
         include Phlex::Rails::Helpers::LinkTo
         include Phlex::Rails::Helpers::Routes

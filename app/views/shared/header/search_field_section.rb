@@ -1,7 +1,7 @@
 module Views
   module Shared
     module Header
-      class SearchFieldHeaderPartial < Views::Base
+      class SearchFieldSection < Views::Base
         include Phlex::SVG::StandardElements
         def view_template
           div(class: "w-64 mx-4", data: { controller: "user-search" }) do

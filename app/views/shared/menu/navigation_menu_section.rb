@@ -1,7 +1,7 @@
 module Views
   module Shared
     module Menu
-      class NavigationMenuSectionPartial < Views::Base
+      class NavigationMenuSection < Views::Base
         include Phlex::Rails::Helpers::Routes
         include Phlex::Rails::Helpers::LinkTo
         include Phlex::SVG::StandardElements

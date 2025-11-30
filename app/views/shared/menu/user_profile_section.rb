@@ -1,7 +1,7 @@
 module Views
   module Shared
     module Menu
-      class UserProfileSectionPartial < Views::Base
+      class UserProfileSection < Views::Base
         include Phlex::Rails::Helpers::CurrentPage
         include Phlex::Rails::Helpers::LinkTo
         include Phlex::Rails::Helpers::Routes

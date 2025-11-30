@@ -3,7 +3,6 @@ module Components
     module Avatar
       class UserAvatarComponent < Components::Base
         include Phlex::Rails::Helpers::ImageTag
-        include Components::Ui::Display::Base
         def initialize(user:, size: 16, show_status: false, editable: false, **params, &block)
           @user = user
           @size = size
